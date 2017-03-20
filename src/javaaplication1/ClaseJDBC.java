@@ -129,6 +129,64 @@ public class ClaseJDBC {
 
     public static void Actualizar() {
 
+        Scanner lec2 = new Scanner(System.in);
+        System.out.println("Escriba el codigo el producto");
+        int CodigoDelProducto = lec2.nextInt();
+        System.out.println("Escriba el nuevo precio");
+        int precioNuevo = lec2.nextInt();
+        System.out.println("-------- MySQL JDBC Connection Testing ------------");
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Where is your MySQL JDBC Driver?");
+            e.printStackTrace();
+            return;
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        System.out.println("MySQL JDBC Driver Registered!");
+        Connection connection = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ClaseJDBC", "root", "root");
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return;
+        }
+
+        if (connection != null) {
+            System.out.println("You made it, take control your database now!");
+        } else {
+            System.out.println("Failed to make connection!");
+        }
+
+        PreparedStatement preparedStmt = null;
+
+        try {
+            //Update
+            // create the java mysql update preparedstatement
+            String query = "update Productos set Precio = ? where CodProducto = ?";
+            preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setInt(1, precioNuevo);
+            preparedStmt.setInt(2, CodigoDelProducto);
+
+            // execute the java preparedstatement
+            int r = preparedStmt.executeUpdate();
+            System.out.println(r);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.out.println("Failed to make update!");
+            e.printStackTrace();
+        }
     }
 
     public static void Listar() {
@@ -205,11 +263,9 @@ public class ClaseJDBC {
 
     public static void Borrar() {
 
-        Scanner lec2 = new Scanner(System.in);
-        System.out.println("Escriba el codigo el producto");
-        int CodigoDelProducto = lec2.nextInt();
-        System.out.println("Escriba el nuevo precio");
-        int precioNuevo = lec2.nextInt();
+        Scanner lec3 = new Scanner(System.in);
+        System.out.println("Escriba el codigo del producto que desea borrar");
+        int Codigo = lec3.nextInt();
         System.out.println("-------- MySQL JDBC Connection Testing ------------");
 
         try {
@@ -244,20 +300,14 @@ public class ClaseJDBC {
         } else {
             System.out.println("Failed to make connection!");
         }
-       
-        PreparedStatement preparedStmt = null;
-        
-        try {
-            //Update
-            // create the java mysql update preparedstatement
-            String query = "update Productos set Precio = ? where CodProducto = ?";
-            preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, precioNuevo);
-            preparedStmt.setInt(2, CodigoDelProducto);
 
-            // execute the java preparedstatement
-            int r= preparedStmt.executeUpdate();
-            System.out.println(r);
+        PreparedStatement preparedStmt = null;
+
+        try {
+            String query = "delete from Productos where CodProducto = ?";
+            preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setInt(1, Codigo);
+            preparedStmt.execute();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             System.out.println("Failed to make update!");

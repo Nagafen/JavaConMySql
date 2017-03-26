@@ -19,10 +19,49 @@ import java.util.Scanner;
  * @author Labing
  */
 public class ClaseJDBC {
+    
+    public static Connection connection;
+    public static PreparedStatement preparedStmt;
 
     public static void main(String[] args) {
 
         while (true) {
+            
+            System.out.println("-------- MySQL JDBC Connection Testing ------------");
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+
+            } catch (ClassNotFoundException e) {
+                System.out.println("Where is your MySQL JDBC Driver?");
+                e.printStackTrace();
+                return;
+            } catch (InstantiationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            System.out.println("MySQL JDBC Driver Registered!");
+            
+            connection = null;
+            
+            try {
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ClaseJDBC", "root", "root");
+
+            } catch (SQLException e) {
+                System.out.println("Connection Failed! Check output console");
+                e.printStackTrace();
+                return;
+            }
+
+            if (connection != null) {
+                System.out.println("You made it, take control your database now!");
+            } else {
+                System.out.println("Failed to make connection!");
+            }
 
             Scanner menu = new Scanner(System.in);
             System.out.println("Opcion 1 : INSERTAR");
@@ -62,52 +101,11 @@ public class ClaseJDBC {
         System.out.println("Escriba la ciudad");
         String ciudad = lec.next();
 
-        System.out.println("-------- MySQL JDBC Connection Testing ------------");
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your MySQL JDBC Driver?");
-            e.printStackTrace();
-            return;
-        } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        System.out.println("MySQL JDBC Driver Registered!");
-        Connection connection = null;
-
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ClaseJDBC", "root", "root");
-
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return;
-        }
-
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-        } else {
-            System.out.println("Failed to make connection!");
-        }
-
-        //Insertion 
-        // create a sql date object so we can use it in our INSERT statement
-//        Calendar calendar = Calendar.getInstance();
-//        java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
-        // the mysql insert statement
         String query = " insert into Productos (CodProducto, Precio, Proveedor, Ciudad)"
                 + " values (?, ?, ?, ?)";
 
-        // create the mysql insert preparedstatement
-        PreparedStatement preparedStmt = null;
-
+        preparedStmt = null;
+        
         try {
 
             preparedStmt = connection.prepareStatement(query);

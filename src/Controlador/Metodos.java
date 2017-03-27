@@ -30,7 +30,7 @@ public class Metodos {
         
         if (tipo.equalsIgnoreCase("Artista")) {
             
-            String query = " insert into Productos (artist_id, artist_name)"
+            String query = " insert into artist (artist_id, artist_name)"
                     + " values (?, ?)";
 
             preparedStmt = null;

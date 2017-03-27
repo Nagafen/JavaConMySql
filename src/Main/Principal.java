@@ -5,13 +5,8 @@
  */
 package Main;
 
-import static Controlador.Metodos.Actualizar;
-import static Controlador.Metodos.Borrar;
-import static Controlador.Metodos.Insetar;
-import static Controlador.Metodos.Listar;
+
 import Vistas.VistaPrincipal;
-import java.util.Scanner;
-import modelo.Conexion;
 
 /**
  *
@@ -22,7 +17,7 @@ public class Principal {
     public static String tipo;
     
     public static void main(String[] args) {
-        VistaPrincipal v = new VistaPrincipal();
-        v.setVisible(true);
+        VistaPrincipal pri = new VistaPrincipal();
+        pri.setVisible(true);
     }
 }

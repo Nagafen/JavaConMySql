@@ -23,17 +23,14 @@ public class Metodos {
 
     public static Connection connection;
     public static PreparedStatement preparedStmt;
-
+    public static String nombreA;
+    public static int id;
+    
     public static void Insetar(String tipo) {
-
-        Scanner lec = new Scanner(System.in);
-
+        
         if (tipo.equalsIgnoreCase("Artista")) {
-            System.out.println("Escriba el id del artista");
-            int id = lec.nextInt();
-            System.out.println("Escriba el nombre del artista");
-            String nombreA = lec.next();
-            String query = " insert into Productos (artist__id, artist_name)"
+            
+            String query = " insert into Productos (artist_id, artist_name)"
                     + " values (?, ?)";
 
             preparedStmt = null;

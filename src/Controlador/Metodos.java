@@ -56,6 +56,7 @@ public class Metodos {
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, nuevoNombre);
             preparedStmt.setInt(2, id);
+            preparedStmt.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println("Failed to make update!");
@@ -143,6 +144,7 @@ public class Metodos {
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, albumName);
             preparedStmt.setInt(2, idAl);
+            preparedStmt.executeUpdate();
             
         } catch (SQLException e) {
             System.out.println("Failed to make update!");
@@ -234,6 +236,7 @@ public class Metodos {
             preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, nombre);
             preparedStmt.setInt(2, id);
+            preparedStmt.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println("Failed to make update!");
